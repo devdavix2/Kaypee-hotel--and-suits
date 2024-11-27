@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <link rel="stylesheet" href="hotelpj.css">
+</head>
+<body>
+    <div class="checkout-container">
+        <h1>Checkout</h1>
+        <div class="room-details">
+            <!-- Dynamic Room Details -->
+            <img id="room-img" src="" alt="Room Image" class="room-img">
+            <p id="room-name"></p>
+            <p id="room-price"></p>
+        </div>
+
+        <form action="process_checkout.php" method="POST" class="checkout-form">
+            <label for="duration">Duration of Stay (nights):</label>
+            <input type="number" id="duration" name="duration" min="1" required>
+
+            <label for="guests">Number of Guests:</label>
+            <input type="number" id="guests" name="guests" min="1" required>
+
+            <button type="submit" class="submit-button">Confirm Booking</button>
+        </form>
+    </div>
+
+    <script>
+        // Function to extract URL query parameters
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        // Populate room details dynamically
+        window.onload = function() {
+            const room = getQueryParam('room');
+            const price = getQueryParam('price');
+            const image = getQueryParam('image');
+
+            document.getElementById('room-name').textContent = room;
+            document.getElementById('room-price').textContent = `Price: ₦${price.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}/night`;
+            document.getElementById('room-img').src = image;
+        };
+    </script>
+</body>
+</html>
